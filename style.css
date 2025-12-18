@@ -358,3 +358,23 @@ button:active {
         font-size: 1.1rem;
     }
 }
+
+/* Developer Footer */
+.developer-footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.9rem;
+    opacity: 0.7;
+    line-height: 1.6;
+}
+
+.developer-footer .dev-name {
+    color: #00ffcc;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
+}
+
+.developer-footer .dev-sub {
+    font-size: 0.8rem;
+    opacity: 0.6;
+}
