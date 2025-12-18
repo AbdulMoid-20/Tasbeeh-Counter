@@ -133,7 +133,6 @@ document.addEventListener("DOMContentLoaded", () => {
     /* Themes */
     const themes = {
         dark: "#061a15",
-        light: "#f5f5f5",
         green: "#0b3d2e",
         blue: "#0a2540",
         gold: "#2c2200"
