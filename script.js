@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     lucide.createIcons();
 
-    /* DOM Elements */
+    /* ================= DOM ELEMENTS ================= */
     const display = document.getElementById("display");
     const incrementBtn = document.getElementById("increment");
     const decrementBtn = document.getElementById("decrement");
@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const selectedZikr = document.getElementById("selectedZikr");
     const zikrOptions = document.querySelector(".zikr-options");
+    const zikrTextEl = document.getElementById("zikrText");
 
     const openSettings = document.getElementById("openSettings");
     const closeSettings = document.getElementById("closeSettings");
@@ -22,23 +23,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const soundToggle = document.getElementById("soundToggle");
 
     const ring = document.querySelector(".ring-progress");
+
+    /* ================= RING SETUP ================= */
     const radius = 110;
     const circumference = 2 * Math.PI * radius;
-
     ring.style.strokeDasharray = circumference;
     ring.style.strokeDashoffset = circumference;
 
-    /* State */
+    /* ================= STATE ================= */
     let count = 0;
     let soundEnabled = true;
     let currentZikr = "subhanallah";
 
+    let customZikrText = "Custom Zikr";
+    let customZikrLimit = 33;
+
+    /* ================= ZIKR DATA ================= */
     const zikrLimits = {
         subhanallah: 33,
         alhamdulillah: 33,
         allahuakbar: 34,
         astaghfirullah: 100,
-        lailaha: 100
+        lailaha: 100,
+        custom: () => customZikrLimit
     };
 
     const zikrMap = {
@@ -46,10 +53,11 @@ document.addEventListener("DOMContentLoaded", () => {
         alhamdulillah: "الحمد لله",
         allahuakbar: "الله أكبر",
         astaghfirullah: "أستغفر الله",
-        lailaha: "لا إله إلا الله"
+        lailaha: "لا إله إلا الله",
+        custom: () => customZikrText
     };
 
-    /* Noor Particles */
+    /* ================= NOOR PARTICLES ================= */
     const noorContainer = document.getElementById("noor-particles");
     setInterval(() => {
         const noor = document.createElement("span");
@@ -60,16 +68,28 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => noor.remove(), 20000);
     }, 700);
 
-    /* Ring Update */
+    /* ================= FUNCTIONS ================= */
+    function getCurrentLimit() {
+        return typeof zikrLimits[currentZikr] === "function"
+            ? zikrLimits[currentZikr]()
+            : zikrLimits[currentZikr];
+    }
+
+    function getCurrentZikrText() {
+        return typeof zikrMap[currentZikr] === "function"
+            ? zikrMap[currentZikr]()
+            : zikrMap[currentZikr];
+    }
+
     function updateRing() {
-        const limit = zikrLimits[currentZikr];
+        const limit = getCurrentLimit();
         ring.style.strokeDashoffset =
             circumference - (count / limit) * circumference;
 
         display.classList.toggle("zero", count === 0);
     }
 
-    /* Zikr Selector */
+    /* ================= ZIKR SELECTOR ================= */
     selectedZikr.addEventListener("click", e => {
         e.stopPropagation();
         zikrOptions.classList.toggle("hidden");
@@ -78,7 +98,21 @@ document.addEventListener("DOMContentLoaded", () => {
     zikrOptions.querySelectorAll("div").forEach(option => {
         option.addEventListener("click", () => {
             currentZikr = option.dataset.value;
-            document.getElementById("zikrText").textContent = zikrMap[currentZikr];
+
+            if (currentZikr === "custom") {
+                const text = prompt("Enter custom zikr text:");
+                const limit = prompt("Enter target count (e.g. 33 or 100):", "33");
+
+                if (!text || isNaN(limit) || Number(limit) <= 0) {
+                    currentZikr = "subhanallah";
+                    return;
+                }
+
+                customZikrText = text;
+                customZikrLimit = Number(limit);
+            }
+
+            zikrTextEl.textContent = getCurrentZikrText();
             count = 0;
             display.textContent = count;
             zikrOptions.classList.add("hidden");
@@ -86,14 +120,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    /* Counter */
+    /* ================= COUNTER ================= */
     incrementBtn.addEventListener("click", () => {
         count++;
+
         if (soundEnabled) {
             tasbeehSound.currentTime = 0;
             tasbeehSound.play();
         }
-        if (count >= zikrLimits[currentZikr]) count = 0;
+
+        if (count >= getCurrentLimit()) count = 0;
+
         display.textContent = count;
         updateRing();
     });
@@ -110,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateRing();
     });
 
-    /* Settings Modal */
+    /* ================= SETTINGS MODAL ================= */
     openSettings.addEventListener("click", e => {
         e.stopPropagation();
         modal.classList.remove("hidden");
@@ -130,7 +167,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    /* Themes */
+    /* ================= THEMES (NO LIGHT) ================= */
     const themes = {
         dark: "#061a15",
         green: "#0b3d2e",
@@ -140,17 +177,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
     themeButtons.forEach(btn => {
         btn.addEventListener("click", () => {
-            document.documentElement.style.setProperty("--bg", themes[btn.dataset.theme]);
+            document.documentElement.style.setProperty(
+                "--bg",
+                themes[btn.dataset.theme]
+            );
         });
     });
 
+    /* ================= CUSTOM COLOR ================= */
     customColor.addEventListener("input", e => {
         document.documentElement.style.setProperty("--bg", e.target.value);
     });
 
+    /* ================= SOUND TOGGLE ================= */
     soundToggle.addEventListener("change", () => {
         soundEnabled = soundToggle.checked;
     });
 
+    /* ================= INIT ================= */
+    zikrTextEl.textContent = getCurrentZikrText();
     updateRing();
 });
