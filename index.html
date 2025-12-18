@@ -16,6 +16,9 @@
     <!-- Noor Particles -->
     <div id="noor-particles"></div>
 
+    <!-- About Button -->
+    <button id="openAbout" class="about-btn">About App</button>
+
     <!-- Settings Button -->
     <button id="openSettings" class="settings-btn">
         <i data-lucide="settings"></i>
@@ -82,16 +85,34 @@
         <source src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3">
     </audio>
 
-    <!-- Footer / Developer Info -->
-    <footer class="developer-footer">
-        <p>
-            Developed with 🤍 by
-            <span class="dev-name">Abdul Moid</span>
-        </p>
-        <p class="dev-sub">
-            Digital Tasbeeh • Sadaqah Jariyah
-        </p>
-    </footer>
+    <!-- About App Modal -->
+    <div id="aboutModal" class="modal hidden">
+        <div class="modal-content about-content">
+            <h3>About This App</h3>
+
+            <p class="about-text">
+                This <strong>Digital Tasbeeh</strong> is designed to help Muslims
+                remember Allah easily and peacefully.
+            </p>
+
+            <p class="about-text arabic">
+                ﴿ أَلَا بِذِكْرِ ٱللَّٰهِ تَطْمَئِنُّ ٱلْقُلُوبُ ﴾
+            </p>
+
+            <p class="about-text">
+                Features include Arabic zikr, custom tasbeeh counts,
+                Noor animations, sound feedback, and beautiful themes.
+            </p>
+
+            <p class="about-dev">
+                Developed by <span>Your Name</span><br>
+                <small>Sadaqah Jariyah 🤍</small>
+            </p>
+
+            <button id="closeAbout">Close</button>
+        </div>
+    </div>
+
 
 
     <script src="script.js"></script>

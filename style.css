@@ -359,22 +359,38 @@ button:active {
     }
 }
 
-/* Developer Footer */
-.developer-footer {
-    margin-top: 2rem;
-    text-align: center;
+/* About App */
+.about-btn {
+    border-radius: 12px;
+    padding: 0.6rem;
     font-size: 0.9rem;
-    opacity: 0.7;
+}
+
+.about-content {
+    max-width: 320px;
+}
+
+.about-text {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin: 0.6rem 0;
     line-height: 1.6;
 }
 
-.developer-footer .dev-name {
+.about-text.arabic {
+    font-size: 1.1rem;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.about-dev {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    opacity: 0.7;
+}
+
+.about-dev span {
     color: #00ffcc;
     font-weight: bold;
     text-shadow: 0 0 8px rgba(0, 255, 204, 0.5);
-}
-
-.developer-footer .dev-sub {
-    font-size: 0.8rem;
-    opacity: 0.6;
 }

@@ -24,6 +24,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const ring = document.querySelector(".ring-progress");
 
+    const openAbout = document.getElementById("openAbout");
+    const closeAbout = document.getElementById("closeAbout");
+    const aboutModal = document.getElementById("aboutModal");
+
+
+    openAbout.addEventListener("click", () => {
+        modal.classList.add("hidden");
+        aboutModal.classList.remove("hidden");
+    });
+
+    closeAbout.addEventListener("click", () => {
+        aboutModal.classList.add("hidden");
+    });
+
+
     /* ================= RING SETUP ================= */
     const radius = 110;
     const circumference = 2 * Math.PI * radius;
