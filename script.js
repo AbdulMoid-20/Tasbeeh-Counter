@@ -1,5 +1,7 @@
 lucide.createIcons();
 
+
+
 /* ================= DOM ELEMENTS ================= */
 const display = document.getElementById("display");
 const incrementBtn = document.getElementById("increment");
